@@ -1,0 +1,4 @@
+﻿  Interface.cpp
+c:\users\ric124\desktop\programming\shittyprojects\labs\lab1kar\cpplabkar1\3-rd_work\interface.cpp(103): warning C4715: 'accept_deny': not all control paths return a value
+  3-rd_work.vcxproj -> C:\Users\Ric124\Desktop\Programming\ShittyProjects\Labs\Lab1Kar\CppLabKar1\x64\Debug\1st_work.exe
+  3-rd_work.vcxproj -> C:\Users\Ric124\Desktop\Programming\ShittyProjects\Labs\Lab1Kar\CppLabKar1\x64\Debug\1st_work.pdb (Partial PDB)
