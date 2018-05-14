@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void save_to_file(Matrix bm, AllCordinates ac)
+void save_to_file(Matrix initial_matrix, Matrix final_Matrix, Sorts sorts)
 {
 	
 	cout << endl << "Хотите ли вы сохранить матрицу в отдельный файл? Y/N" << endl;;
@@ -53,7 +53,7 @@ void save_to_file(Matrix bm, AllCordinates ac)
 				{
 					check_opening.close();
 					ofstream user_output(filename);
-					bm.print_matrix_to_file(user_output);
+					initial_matrix.print_matrix_to_file(user_output);
 				}
 				else
 				{
@@ -63,17 +63,21 @@ void save_to_file(Matrix bm, AllCordinates ac)
 			else
 			{
 				ofstream user_output(filename, ios_base::app);
-				bm.print_matrix_to_file(user_output);
+				initial_matrix.print_matrix_to_file(user_output);
 			}
-			cout << "Хотите ли вы записать координаты найденных квадратов? Y/N" << endl;
+			cout << "Хотите ли вы записать итоговую матрицу в файл? Y/N" << endl;
 			if (accept_deny() == true)
 			{
 				ofstream user_output(filename, ios_base::app);
-				for (int i = 0; i < ac.size; i++) {
-					user_output << '[' << ac.cordinates[i].row << ',' << ac.cordinates[i].column << ']' << ' ';
-				}
+				final_Matrix.print_matrix_to_file(user_output);
 				user_output << endl;
-				user_output.close();
+			}
+			cout << "Хотите ли вы записать таблицу с результатами в файл? Y/N" << endl;
+			if (accept_deny() == true)
+			{
+				ofstream user_output(filename, ios_base::app);
+				sorts.saveTableToFile(user_output);
+				user_output << endl;
 			}
 
 		} while (is_saved == false);
@@ -223,57 +227,76 @@ char correct_char_input()
 
 void keyboard_input()
 {
-	int size;
-	cout << "Введите размер: ";
-	size = correct_user_input(2, INT_MAX);
-	Matrix bm(size);
+	int rows, columns;
+	cout << "Введите кол-во строк: ";
+	rows = correct_user_input(2, INT_MAX);
+	cout << "Введите кол-во столбцов: ";
+	columns = correct_user_input(2, INT_MAX);
+	Matrix bm(rows,columns);
 	
-	for (int i = 0; i < bm.getSize(); i++) {
-		for (int j = 0; j < bm.getSize(); j++) {
+	for (int i = 0; i < bm.getRows(); i++) {
+		for (int j = 0; j < bm.getColumns(); j++) {
 			cout << "Введите элементы матрицы: ";
-			int element = correct_user_input(0, 1);
-			bm.setMatrixElement(i, j, element);
+			bm[i][j] = correct_user_input();
 		}
 	}
-	bm.print_matrix();
-	AllCordinates cords = solution(bm);
-	if (cords.size != 0) {
-		for (int i = 0; i < cords.size; i++) {
-			cout << '[' << cords.cordinates[i].row << ',' << cords.cordinates[i].column << ']' << ' ';
-		}
-	}
-	else {
-		cout << "Квадратов с заданным размером найдено не было" << endl;
-	}
+	bm.print_matrix("Исходная матрица");
+
+	Sorts sorts;
+	Matrix initial(bm);
+	Matrix bm2 = sorts.selection_sort(bm);
+	Matrix bm3 = sorts.insertion_sort(bm);
+	Matrix bm4 = sorts.shell_sort(bm);
+	Matrix bm5 = sorts.quick_sort(bm);
+	bm = sorts.bubble_sort(bm);
+
+	bm.print_matrix("Сортировка пузырьком");
+	bm2.print_matrix("Сортировка выбором");
+	bm3.print_matrix("Сортировка вставками");
+	bm4.print_matrix("Сортировка Шелла");
+	bm5.print_matrix("Быстрая сортировка");
+
+	sorts.showTable();
+
 	cout << endl;
-	save_to_file(bm, cords);
+	save_to_file(initial, bm, sorts);
 }
 
 void random_filling() {
-	int size;
-	cout << "Введите размер: ";
-	size = correct_user_input(2, INT_MAX);
-	Matrix bm(size);
-	cout << "Введите элементы матрицы" << endl;
-	for (int i = 0; i < bm.getSize(); i++) {
-		for (int j = 0; j < bm.getSize(); j++) {
-			int element = rand() % 2;
-			bm.setMatrixElement(i, j, element);
-		}
-	}
-	bm.print_matrix();
+	int rows, columns;
+	cout << "Введите кол-во строк: ";
+	rows = correct_user_input(2, INT_MAX);
+	cout << "Введите кол-во столбцов: ";
+	columns = correct_user_input(2, INT_MAX);
+	Matrix bm(rows, columns);
+	srand(time(0));
 
-	AllCordinates cords = solution(bm);
-	if (cords.size != 0) {
-		for (int i = 0; i < cords.size; i++) {
-			cout << '[' << cords.cordinates[i].row << ',' << cords.cordinates[i].column << ']' << ' ';
+	for (int i = 0; i < bm.getRows(); i++) {
+		for (int j = 0; j < bm.getColumns(); j++) {
+			int element = rand() % 100 - 50;
+			bm[i][j] = element;
 		}
 	}
-	else {
-		cout << "Квадратов с заданным размером найдено не было" << endl;
-	}
+	bm.print_matrix("Исходная матрица");
+
+	Sorts sorts;
+	Matrix initial(bm);
+	Matrix bm2 = sorts.selection_sort(bm);
+	Matrix bm3 = sorts.insertion_sort(bm);
+	Matrix bm4 = sorts.shell_sort(bm);
+	Matrix bm5 = sorts.quick_sort(bm);
+	bm = sorts.bubble_sort(bm);
+	
+	bm.print_matrix("Сортировка пузырьком");
+	bm2.print_matrix("Сортировка выбором");
+	bm3.print_matrix("Сортировка вставками");
+	bm4.print_matrix("Сортировка Шелла");
+	bm5.print_matrix("Быстрая сортировка");
+	
+	sorts.showTable();
+	
 	cout << endl;
-	save_to_file(bm, cords);
+	save_to_file(initial, bm, sorts);
 }
 
 void input_from_file(string filename)
@@ -295,16 +318,7 @@ void input_from_file(string filename)
 			}
 			test_file.close();
 			file_input.open(filename);
-			int tmp;
 			is_correct_content = true;
-			while (!file_input.eof()) {
-				file_input >> tmp;
-				if (tmp < 0 && tmp > 1) {
-					cout << "Неккоректные числа в файле, измените файл или выберите другой" << endl;
-					is_correct_content = false;
-					break;
-				}
-			}
 		}
 	}
 	else
@@ -313,17 +327,24 @@ void input_from_file(string filename)
 	}
 
 	Matrix bm(file_input);
-	bm.print_matrix();
+	bm.print_matrix("Исходная матрица");
+	
+	Sorts sorts;
+	Matrix initial(bm);
+	Matrix bm2 = sorts.selection_sort(bm);
+	Matrix bm3 = sorts.insertion_sort(bm);
+	Matrix bm4 = sorts.shell_sort(bm);
+	Matrix bm5 = sorts.quick_sort(bm);
+	bm = sorts.bubble_sort(bm);
 
-	AllCordinates cords = solution(bm);
-	if (cords.size != 0) {
-		for (int i = 0; i < cords.size; i++) {
-			cout << '[' << cords.cordinates[i].row << ',' << cords.cordinates[i].column << ']' << ' ';
-		}
-	}
-	else {
-		cout << "Квадратов с заданным размером найдено не было" << endl;
-	}
+	bm.print_matrix("Сортировка пузырьком");
+	bm2.print_matrix("Сортировка выбором");
+	bm3.print_matrix("Сортировка вставками");
+	bm4.print_matrix("Сортировка Шелла");
+	bm5.print_matrix("Быстрая сортировка");
+
+	sorts.showTable();
+
 	cout << endl;
-	save_to_file(bm, cords);
+	save_to_file(initial, bm, sorts);
 }

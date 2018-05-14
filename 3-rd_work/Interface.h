@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <fstream>
-#include "BinaryMatrix.h"
+#include "Matrix.h"
 #include <cstring>
 #include "Algorithm.h"
 
@@ -15,6 +15,6 @@ void unit_tests();
 int correct_user_input(int min=0, int max=0);
 char correct_char_input();
 bool accept_deny();
-void save_to_file(Matrix str, AllCordinates ac);
+void save_to_file(Matrix initial_matrix, Matrix final_Matrix,  Sorts sorts);
 void keyboard_input();
 void random_filling();

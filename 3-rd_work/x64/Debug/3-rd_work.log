@@ -1,4 +1,5 @@
-﻿  Interface.cpp
-c:\users\ric124\desktop\programming\shittyprojects\labs\lab1kar\cpplabkar1\3-rd_work\interface.cpp(103): warning C4715: 'accept_deny': not all control paths return a value
-  3-rd_work.vcxproj -> C:\Users\Ric124\Desktop\Programming\ShittyProjects\Labs\Lab1Kar\CppLabKar1\x64\Debug\1st_work.exe
-  3-rd_work.vcxproj -> C:\Users\Ric124\Desktop\Programming\ShittyProjects\Labs\Lab1Kar\CppLabKar1\x64\Debug\1st_work.pdb (Partial PDB)
+﻿C:\Program Files (x86)\Microsoft Visual Studio 2017\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (1st_work.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Interface.cpp
+c:\users\рик\desktop\programming\projects\labscpp\lab2kar\cpplab2kar\3-rd_work\interface.cpp(272): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\рик\desktop\programming\projects\labscpp\lab2kar\cpplab2kar\3-rd_work\interface.cpp(107): warning C4715: 'accept_deny': not all control paths return a value
+  3-rd_work.vcxproj -> C:\Users\РиК\Desktop\Programming\Projects\LabsCpp\Lab2Kar\CppLab2Kar\x64\Debug\2nd_work.exe
